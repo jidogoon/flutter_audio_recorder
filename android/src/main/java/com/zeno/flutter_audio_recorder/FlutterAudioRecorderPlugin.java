@@ -67,20 +67,20 @@ public class FlutterAudioRecorderPlugin implements MethodCallHandler, PluginRegi
     switch (requestCode) {
       case REQUEST_RECORD_AUDIO_PERMISSION:
         boolean granted = true;
-        Log.d(LOG_NAME, "parsing result");
+        // Log.d(LOG_NAME, "parsing result");
         for (int result : grantResults) {
           if(result != PackageManager.PERMISSION_GRANTED) {
-            Log.d(LOG_NAME, "result" + result);
+            // Log.d(LOG_NAME, "result" + result);
             granted = false;
           }
         }
-        Log.d(LOG_NAME, "onRequestPermissionsResult -" + granted);
+        // Log.d(LOG_NAME, "onRequestPermissionsResult -" + granted);
         if(_result != null) {
           _result.success(granted);
         }
         return granted;
         default:
-          Log.d(LOG_NAME, "onRequestPermissionsResult - false");
+          // Log.d(LOG_NAME, "onRequestPermissionsResult - false");
           return false;
     }
   }
@@ -130,12 +130,12 @@ public class FlutterAudioRecorderPlugin implements MethodCallHandler, PluginRegi
 
   private void handleHasPermission(){
     if(hasRecordPermission()){
-      Log.d(LOG_NAME, "handleHasPermission true");
+      // Log.d(LOG_NAME, "handleHasPermission true");
       if(_result != null) {
         _result.success(true);
       }
     } else {
-      Log.d(LOG_NAME, "handleHasPermission false");
+      // Log.d(LOG_NAME, "handleHasPermission false");
 
       if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
         ActivityCompat.requestPermissions(registrar.activity(), new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_RECORD_AUDIO);
@@ -243,7 +243,7 @@ public class FlutterAudioRecorderPlugin implements MethodCallHandler, PluginRegi
       } catch (IOException e) {
         e.printStackTrace();
       }
-      Log.d(LOG_NAME, "before adding the wav header");
+      // Log.d(LOG_NAME, "before adding the wav header");
       copyWaveFile(getTempFilename(), mFilePath);
       deleteTempFile();
 
@@ -254,12 +254,12 @@ public class FlutterAudioRecorderPlugin implements MethodCallHandler, PluginRegi
   }
 
   private void processAudioStream() {
-    Log.d(LOG_NAME, "processing the stream: " + mStatus);
+    // Log.d(LOG_NAME, "processing the stream: " + mStatus);
     int size = bufferSize;
     byte bData[] = new byte[size];
 
     while (mStatus == "recording"){
-      Log.d(LOG_NAME, "reading audio data");
+      // Log.d(LOG_NAME, "reading audio data");
       mRecorder.read(bData, 0, bData.length);
       mDataSize += bData.length;
       updatePowers(bData);
